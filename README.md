@@ -17,7 +17,7 @@ Autor: Luís Lucas
 
 Turma: D
 
-Link da Aplicação Web:
+Link da Aplicação Web:  https://luispslucas09-pixel.github.io/Projeto_Multimedia_2026/
 
 1. Visão Geral do Projeto
 Descrição: No meu Dashboard, eu criei uma pagina onde posso divertirme, aprender e organizar-me para que possa compriender a minha gestão de tempo. Nele podemos encontar um quiz de geografia que ajuda a aumentar o conhecimento sobre algumas partes do planeta. Está também presente um auxiliar de gestor de tarefas onde podemos introduzir o nossos trabalhos e integrar uma data. E por fim um auxiliar de desenvolvimento de um podcast e calcular os recursos necessárias ao seu desenvolvimento. Em suma, o objetivo do meu Dashboar é auxiliar ao conhecimento mundial e organizar e resolver as tarefas do teu dia a dia. 
