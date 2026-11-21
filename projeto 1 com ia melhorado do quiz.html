@@ -1,0 +1,262 @@
+<!DOCTYPE html> <!-- Diz ao navegador que o documento é HTML5 -->
+<html lang="pt-PT"> <!-- Para o texto ser em português -->
+
+<head>
+    <meta charset="UTF-8"> <!-- Garante que acentos e cedilhas aparecem corretamente -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Adapta a página ao tamanho do ecrã -->
+    <title>Oficina Multimédia</title> <!-- Texto que aparece no separador do navegador -->
+
+    <!-- Folha de estilos (CSS) com o teu design -->
+    <style>
+        /* Estilo geral da página */
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            background-color: #f4f6f9; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        
+        /* Cabeçalho da página */
+        header { 
+            text-align: center; 
+            padding: 20px; 
+            background-color: #0f172a; 
+            color: white; 
+            border-radius: 8px; 
+        }
+        
+        /* Contentor central para o cartão */
+        .dashboard-container { 
+            display: flex; 
+            justify-content: center; 
+            margin-top: 20px; 
+        }
+        
+        /* Cartão principal que contém tudo em ordem */
+        .widget-card { 
+            width: 100%; 
+            max-width: 600px; 
+            background: rgb(216, 231, 239); 
+            padding: 25px; 
+            border-radius: 8px; 
+            border: 1px solid #cbd5e1; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+        }
+        
+        /* Títulos h2 e h3 dentro do cartão */
+        .widget-card h2 { 
+            color: #2563eb; 
+            margin-top: 0; 
+            font-size: 1.5em; 
+        }
+
+        .widget-card h3 { 
+            color: #0f172a; 
+            font-size: 1.1em; 
+            border-bottom: 2px solid #cbd5e1; 
+            padding-bottom: 5px; 
+            margin-top: 20px; 
+        }
+        
+        /* Pequena etiqueta verde (crachá) */
+        .status-badge { 
+            background: #dcfce7; 
+            color: #166534; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 0.8em; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+            font-weight: bold; }
+
+        /* Caixa de texto do Quiz */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        /* Estilização dos botões */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0f172a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #1e293b;
+        }
+
+        /* Classes auxiliares */
+        .hidden { 
+            display: none; 
+        }
+
+        .text-center { 
+            text-align: center; 
+        }
+
+        .feedback-certo { 
+            color: #166534; 
+            font-weight: bold;
+            margin-top: 15px; 
+        }
+
+        .feedback-errado { 
+            color: #991b1b; 
+            font-weight: bold; 
+            margin-top: 15px; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cabeçalho Principal da Página -->
+    <header>
+        <h1>Desenvolvimento de Dashboard Web Multimédia Interativo</h1>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="dashboard-container">
+        
+        <!-- CARTÃO ÚNICO: Explicação e Jogo em Ordem -->
+        <article class="widget-card"> 
+            
+            <!-- 1. IDENTIFICAÇÃO E TÍTULO -->
+            <span class="status-badge">Aplicação 1</span>
+            <h2>Quiz de Geografia</h2>
+            <p>Este widget tem como objetivo testar os teus conhecimentos sobre geografia mundial, capitais e factos do planeta.</p>
+            
+            <!-- Linha separadora visual -->
+            <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
+
+            <!-- 2. ÁREA DE JOGO EM ORDEM -->
+            <h3>🎮 Área de Jogo Interativa</h3>
+
+            <!-- Ecrã onde as perguntas e respostas aparecem -->
+            <div id="quiz-container" style="margin-top: 15px;">
+                <div id="pergunta-numero" style="font-size: 0.85em; color: #475569; margin-bottom: 5px; font-weight: bold;"></div>
+                <p id="pergunta-texto" style="font-weight: bold; color: #1e293b; font-size: 1.1em;"></p>
+                
+                <input type="text" id="resposta-input" placeholder="Escreve a tua resposta...">
+                
+                <button onclick="verificarResposta()">Submeter Resposta</button>
+                
+                <div id="feedback" class="text-center"></div>
+            </div>
+
+            <!--Ecrã Final (Escondido até terminar o quiz)-->
+            <div id="resultado-container" class="hidden text-center" style="margin-top: 15px;">
+                <h3 style="color: #166534; border: none;">🎉 Jogo Terminado!</h3>
+                <p id="pontuacao-texto" style="font-weight: bold; color: #1e293b; font-size: 1.1em;"></p>
+                <p id="percentagem-texto" style="color: #475569;"></p>
+                <button onclick="reiniciarJogo()" style="margin-top: 15px;">Jogar Novamente</button>
+            </div>
+
+        </article>
+
+    </main>
+
+    <!--Script em JavaScript responsável pela lógica do jogo-->
+    <script>
+        <!--Lista de Perguntas e Respostas com a correção-->
+        const perguntas = [
+            { texto: "Qual é a Capital de Portugal?", respostaCorreta: "lisboa", correcao: "Lisboa" },
+            { texto: "Quantos oceanos existem no planeta?", respostaCorreta: "5", correcao: "5" },
+            { texto: "Qual a capital da Holanda?", respostaCorreta: "amesterdão", correcao: "Amesterdão" },
+            { texto: "Qual a capital da Grécia?", respostaCorreta: "atenas", correcao: "Atenas" },
+            { texto: "Qual é o país de capital Berna?", respostaCorreta: "suíça", correcao: "Suíça" },
+            { texto: "Qual é o maior continente do mundo em área?", respostaCorreta: "ásia", correcao: "Ásia" },
+            { texto: "Qual é o rio mais longo do mundo?", respostaCorreta: "rio nilo", correcao: "Rio Nilo" },
+            { texto: "Qual é o ponto mais alto do planeta Terra?", respostaCorreta: "monte everest", correcao: "Monte Everest" },
+            { texto: "Qual o menor país do mundo em extensão territorial?", respostaCorreta: "vaticano", correcao: "Vaticano" },
+            { texto: "Qual é a linha imaginária que divide a Terra em Hemisfério Norte e Hemisfério Sul?", respostaCorreta: "linha do equador", correcao: "Linha do Equador" }
+        ];
+
+        <!--Variáveis para controlar o jogo-->
+        let indiceAtual = 0;  <!--Guarda o número da pergunta atual-->
+        let score = 0;  <!--Conta o número de respostas corretas-->
+
+        <!--Seleciona os Elementos do HTML-->
+        const perguntaTexto = document.getElementById("pergunta-texto");
+        const perguntaNumero = document.getElementById("pergunta-numero");
+        const respostaInput = document.getElementById("resposta-input");
+        const feedback = document.getElementById("feedback");
+        const quizContainer = document.getElementById("quiz-container");
+        const resultadoContainer = document.getElementById("resultado-container");
+        const pontuacaoTexto = document.getElementById("pontuacao-texto");
+        const percentagemTexto = document.getElementById("percentagem-texto");
+
+        <!--Função para carregar a pergunta atual-->
+        function carregarPergunta() {
+            <!--Verifica se ainda há perguntas para responder-->
+            if (indiceAtual < perguntas.length) {
+                perguntaNumero.textContent = `Pergunta ${indiceAtual + 1} de ${perguntas.length}`;
+                perguntaTexto.textContent = perguntas[indiceAtual].texto;
+                respostaInput.value = "";  <!-- Limpa o campo de resposta -->
+                feedback.textContent = "";  <!-- Limpa os feedback-->
+            } else {
+                mostrarResultados();  <!--Quando acaba o quiz mostra o resultado final-->
+            }
+        }
+
+        <!--Função para verificar a resposta do utilizador-->
+        function verificarResposta() {
+            <!--Obtém a resposta do utilizador e converte para minúsculas e retira os espaços em branco-->
+            const respostaUtilizador = respostaInput.value.trim().toLowerCase();
+            const atual = perguntas[indiceAtual];
+
+            <!--Verifica se a resposta do utilizador está correta-->
+            if (respostaUtilizador === atual.respostaCorreta) {
+                score++;  <!--Aumenta a pontuação-->
+                feedback.textContent = "✅ Certo!";
+                feedback.className = "text-center feedback-certo";
+            } else {
+                feedback.textContent = `❌ Resposta Errada, era: ${atual.correcao}`;
+                feedback.className = "text-center feedback-errado";
+            }
+
+            indiceAtual++;  <!--Avança para a próxima pergunta-->
+            setTimeout(carregarPergunta, 2500);  <!--Espera este tempo até passar para a próxima questão-->
+        }
+
+        <!--Função para mostrar os resultados finais-->
+        function mostrarResultados() {
+            quizContainer.classList.add("hidden");  <!--Esconde o quiz-->
+            resultadoContainer.classList.remove("hidden");  <!--Mostra o ecrã de resultados-->
+            pontuacaoTexto.textContent = `Obtiveste ${score} Resposta(s) Certa(s) em ${perguntas.length}.`;
+            
+            <!--Calcula a percentagem de respostas corretas-->
+            const percentagem = (score / perguntas.length) * 100;
+            percentagemTexto.textContent = `A tua percentagem é de ${percentagem}%`;
+        }
+
+        <!--Função para reiniciar o jogo-->
+        function reiniciarJogo() {
+            indiceAtual = 0;
+            score = 0;
+            resultadoContainer.classList.add("hidden");
+            quizContainer.classList.remove("hidden");
+            carregarPergunta();
+        }
+
+        <!--Inicia o quiz carregando a primeira pergunta-->
+        carregarPergunta();
+    </script>
+
+</body>
+
+</html>

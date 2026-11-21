@@ -1,0 +1,233 @@
+/* Estilo geral da página */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #0f172a;
+    color: white;
+    border-radius: 8px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 20px auto;
+    align-items: start;
+}
+
+.widget-card {
+    width: 100%;
+    background: rgb(216, 231, 239);
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.widget-card h2 {
+    color: #2563eb;
+    margin-top: 0;
+    font-size: 1.4em;
+}
+
+.widget-card h3 {
+    color: #0f172a;
+    font-size: 1.1em;
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 5px;
+    margin-top: 20px;
+}
+
+.status-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="number"],
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 1em;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #1e293b;
+}
+
+button:active {
+    background-color: #ef4444 !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.feedback-certo {
+    color: #166534;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.feedback-errado {
+    color: #991b1b;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.input-group input[type="text"] {
+    margin: 0;
+    flex: 2;
+}
+
+input[type="date"] {
+    flex: 1;
+    font-size: 0.9em;
+}
+
+.mensagem-parabens {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
+
+#lista-tarefas {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+#lista-tarefas li {
+    background: #ffffff;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+#lista-tarefas li.concluida .tarefa-texto {
+    text-decoration: line-through;
+    color: #64748b;
+}
+
+.tarefa-data {
+    font-size: 0.75em;
+    color: #475569;
+    background-color: #f1f5f9;
+    padding: 3px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.btn-apagar {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    width: auto;
+}
+
+.btn-apagar:hover {
+    background-color: #dc2626;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #1e293b;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.resultados-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.resultado-box {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    text-align: center;
+}
+
+.resultado-valor {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #2563eb;
+    margin-top: 5px;
+}
+
+.guiao-box {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #2563eb;
+    margin-top: 15px;
+    display: none;
+    line-height: 1.5;
+    color: #1e293b;
+}

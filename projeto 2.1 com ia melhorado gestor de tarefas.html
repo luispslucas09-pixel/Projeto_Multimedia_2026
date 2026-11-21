@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina Multimédia</title>
+
+    <style>
+        /* Estilo geral da página */
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            background-color: #f4f6f9; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        
+        /* Cabeçalho da página */
+        header { 
+            text-align: center; 
+            padding: 20px; 
+            background-color: #0f172a; 
+            color: white; 
+            border-radius: 8px; 
+        }
+        
+        /* Contentor central para o cartão */
+        .dashboard-container { 
+            display: flex; 
+            justify-content: center; 
+            margin-top: 20px; 
+        }
+        
+        /* Cartão principal */
+        .widget-card { 
+            width: 100%; 
+            max-width: 600px; 
+            background: rgb(216, 231, 239); 
+            padding: 25px; 
+            border-radius: 8px; 
+            border: 1px solid #cbd5e1; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+        }
+        
+        /* Títulos */
+        .widget-card h2 { 
+            color: #2563eb; 
+            margin-top: 0; 
+            font-size: 1.5em; 
+        }
+        
+        .widget-card h3 { 
+            color: #0f172a; 
+            font-size: 1.1em; 
+            border-bottom: 2px solid #cbd5e1; 
+            padding-bottom: 5px; 
+            margin-top: 20px; 
+        }
+        
+        /* Etiqueta de status */
+        .status-badge { 
+            background: #dcfce7; 
+            color: #166534; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 0.8em; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+            font-weight: bold; 
+        }
+
+        /* Caixa de texto e data */                    
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {              
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        input[type="date"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 0.95em;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        /* Botões */                    
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0f172a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #1e293b;                
+        }
+
+        /* Mensagem de Parabéns */
+        .mensagem-parabens {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        /* Lista de tarefas */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        li {
+            background: #ffffff;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        li.concluida .tarefa-texto {
+            text-decoration: line-through;
+            color: #64748b;
+        }
+
+        .tarefa-data {
+            font-size: 0.8em;
+            color: #475569;
+            background-color: #f1f5f9;
+            padding: 3px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .btn-apagar {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            width: auto;
+        }
+
+        .btn-apagar:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Desenvolvimento de Dashboard Web Multimédia Interativo</h1>
+    </header>
+
+    <main class="dashboard-container">
+        <article class="widget-card"> 
+            <span class="status-badge">Aplicação 2</span>
+            <h2>Gestor de Tarefas</h2>
+            <p>Adiciona e gere as tuas tarefas pendentes diretamente na interface web.</p>
+            
+            <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
+
+            <h3>📝 Adicionar Nova Tarefa</h3>
+            <div class="input-group">
+                <input type="text" id="tarefa-input" placeholder="Escreve a nova tarefa...">
+                <input type="date" id="data-input">
+            </div>
+            <button onclick="adicionarTarefa()">Adicionar à Lista</button>
+
+            <!-- Caixa de alerta para os parabéns -->
+            <div id="mensagem-feedback" class="mensagem-parabens"></div>
+
+            <h3>📋 Lista de Tarefas a Fazer</h3>
+            <ul id="lista-tarefas">
+                <!-- As tarefas aparecem aqui dinamicamente -->
+            </ul>
+        </article>
+    </main>
+
+    <script>
+        <!--Lista inicial de tarefas-->
+        let tarefas = [
+            { texto: "Terminar o README.md", data: "2026-11-23", concluida: false }
+        ];
+
+        <!--Seleciona os Elementos do HTML-->
+        const inputTarefa = document.getElementById("tarefa-input");
+        const inputData = document.getElementById("data-input");
+        const listaTarefas = document.getElementById("lista-tarefas");
+        const mensagemFeedback = document.getElementById("mensagem-feedback");
+
+        <!--Formata a data de AAAA-MM-DD para DD/MM/AAAA-->
+        function formatarData(dataStr) {
+            if (!dataStr) return "Sem data";
+            const partes = dataStr.split("-");
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        <!--Insere as tarefas na lista-->
+        function renderizarTarefas() {
+            listaTarefas.innerHTML = "";  <!--Limpa a lista antes de foltara formatar-->
+            
+            tarefas.forEach((tarefa, index) => {
+                const li = document.createElement("li");
+                if (tarefa.concluida) {
+                    li.classList.add("concluida"); <!--Riscar a tarefa se estiver concluída-->
+                }
+
+                <!--Formata o conteúdo da tarefa-->
+                li.innerHTML = `
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; flex: 1;">
+                        <input type="checkbox" ${tarefa.concluida ? "checked" : ""} onclick="alternarConcluida(${index})">
+                        <span class="tarefa-texto">${tarefa.texto}</span>
+                    </label>
+                    <span class="tarefa-data">📅 ${formatarData(tarefa.data)}</span>
+                    <button class="btn-apagar" onclick="apagarTarefa(${index})">Apagar</button>
+                `;
+                
+                listaTarefas.appendChild(li);
+            });
+        }
+
+        <!--Função para adicionar uma nova tarefa-->
+        function adicionarTarefa() {
+            const texto = inputTarefa.value.trim();
+            const data = inputData.value;
+            
+            if (texto !== "") {
+                tarefas.push({ texto: texto, data: data, concluida: false });
+                inputTarefa.value = "";  <!--Limpa o input da tarefa-->
+                inputData.value = "";  <!--Limpa o input da data-->
+                renderizarTarefas();  <!--Atualiza a lista de tarefas-->
+            }
+        }
+
+        <!--Função para concluir uma tarefa-->
+        function alternarConcluida(index) {
+            tarefas[index].concluida = !tarefas[index].concluida;
+            renderizarTarefas();
+        }
+
+        function apagarTarefa(index) {
+            const tarefaRemovida = tarefas[index];
+            
+            // Verifica se a tarefa estava marcada como concluída antes de apagar
+            if (tarefaRemovida.concluida) {
+                mostrarParabens(tarefaRemovida.texto);
+            }
+
+            tarefas.splice(index, 1);  <!--Remove a tarefa da lista-->
+            renderizarTarefas();
+        }
+
+        <!--Função para mostrar mensagem de parabéns-->
+        function mostrarParabens(nomeTarefa) {
+            mensagemFeedback.textContent = `🎉 Parabéns! Concluíste a tarefa "${nomeTarefa}"!`;
+            mensagemFeedback.style.display = "block";
+            
+            // Esconde a mensagem automaticamente após 4 segundos
+            setTimeout(() => {
+                mensagemFeedback.style.display = "none";
+            }, 4000);
+        }
+
+        // Carregar a lista inicial ao abrir a página
+        renderizarTarefas();
+    </script>
+
+</body>
+
+</html>
